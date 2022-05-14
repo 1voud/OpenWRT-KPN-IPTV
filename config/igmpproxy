@@ -1,0 +1,15 @@
+config igmpproxy
+	option quickleave 1
+#	option verbose [0-3](none, minimal[default], more, maximum)
+
+config phyint
+	option network iptv
+	option zone iptv
+	option direction upstream
+        list altnet 213.75.0.0/16
+        list altnet 217.166.0.0/16
+
+config phyint
+	option network lan
+	option zone lan
+	option direction downstream

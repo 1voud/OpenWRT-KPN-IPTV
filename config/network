@@ -1,0 +1,65 @@
+
+config interface 'loopback'
+	option device 'lo'
+	option proto 'static'
+	option ipaddr '127.0.0.1'
+	option netmask '255.0.0.0'
+
+config globals 'globals'
+	option packet_steering '1'
+	option ula_prefix 'fd27:70fa:5c1d::/48'
+
+config device
+	option name 'br-lan'
+	option type 'bridge'
+	list ports 'lan1'
+	list ports 'lan2'
+	list ports 'lan3'
+	list ports 'lan4'
+	option igmp_snooping '1'
+
+config interface 'lan'
+	option device 'br-lan'
+	option proto 'static'
+	option ip6assign '60'
+	option defaultroute '0'
+	option peerdns '0'
+	option stp '1'
+	option delegate '0'
+	list ipaddr '192.168.2.254/24'
+
+config interface 'wan'
+	option device 'wan.6'
+	option macaddr '00:00:00:00:00:00'
+	option proto 'pppoe'
+	option username ' 00-00-00-00-00-00@internet'
+	option password 'ppp'
+	option ipv6 'auto'
+	option mtu '1508'
+
+config interface 'wan6'
+	option proto 'dhcpv6'
+	option reqaddress 'try'
+	option reqprefix 'auto'
+	option device '@wan'
+
+config interface 'iptv'
+	option proto 'dhcp'
+	option defaultroute '0'
+	option peerdns '0'
+	option vendorid 'IPTV_RG'
+	option device 'br-iptv'
+
+config device
+	option name 'br-iptv'
+	option type 'bridge'
+	list ports 'wan.4'
+
+config device
+	option name 'wlan0'
+	option igmp_snooping '0'
+
+config device
+	option name 'wlan1'
+	option igmp_snooping '0'
+
